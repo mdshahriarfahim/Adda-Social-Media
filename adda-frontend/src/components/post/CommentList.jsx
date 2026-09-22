@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import Avatar from '../common/Avatar';
 import CommentBox from './CommentBox';
 import { getComments, toggleLikeComment } from '../../api/commentApi';
 
 // একটা পোস্টের সব কমেন্ট দেখায় + নতুন কমেন্ট যোগ করার বক্স
 const CommentList = ({ postId }) => {
+  const { t } = useTranslation();
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -34,7 +36,7 @@ const CommentList = ({ postId }) => {
     setComments((prev) => [comment, ...prev]);
   };
 
-  if (loading) return <p style={{ fontSize: 13, color: '#65676b' }}>কমেন্ট লোড হচ্ছে...</p>;
+  if (loading) return <p style={{ fontSize: 13, color: '#65676b' }}>{t('comment.loading')}</p>;
 
   return (
     <div style={{ marginTop: 10 }}>
@@ -47,12 +49,12 @@ const CommentList = ({ postId }) => {
               <div style={{ fontSize: 14 }}>{c.text}</div>
             </div>
             <div style={{ display: 'flex', gap: 12, marginTop: 2, fontSize: 12, color: '#65676b' }}>
-              <span>{formatDistanceToNow(new Date(c.createdAt))} আগে</span>
+              <span>{formatDistanceToNow(new Date(c.createdAt))} {t('common.ago')}</span>
               <span
                 onClick={() => handleLike(c._id)}
                 style={{ cursor: 'pointer', fontWeight: 600, color: c.likes?.length ? '#1877f2' : '#65676b' }}
               >
-                লাইক {c.likes?.length > 0 && `(${c.likes.length})`}
+                {t('comment.like')} {c.likes?.length > 0 && `(${c.likes.length})`}
               </span>
             </div>
           </div>

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiImage, FiX } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import Avatar from '../common/Avatar';
@@ -7,6 +8,7 @@ import { createPost } from '../../api/postApi';
 
 // নতুন পোস্ট লেখার বক্স — text, privacy আর একাধিক ছবি/ভিডিও নেয়
 const CreatePost = ({ onPostCreated }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [text, setText] = useState('');
   const [privacy, setPrivacy] = useState('public');
@@ -39,7 +41,7 @@ const CreatePost = ({ onPostCreated }) => {
       setPreviews([]);
       if (fileInputRef.current) fileInputRef.current.value = '';
     } catch (err) {
-      alert(err.response?.data?.message || 'পোস্ট করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('post.postError'));
     } finally {
       setLoading(false);
     }
@@ -53,7 +55,7 @@ const CreatePost = ({ onPostCreated }) => {
           <textarea
             value={text}
             onChange={(e) => setText(e.target.value)}
-            placeholder={`কী মনে হচ্ছে, ${user?.name?.split(' ')[0] || ''}?`}
+            placeholder={t('post.whatsOnYourMind', { name: user?.name?.split(' ')[0] || '' })}
             rows={2}
             style={{
               flex: 1,
@@ -105,18 +107,18 @@ const CreatePost = ({ onPostCreated }) => {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer', color: '#45bd62', fontWeight: 600, fontSize: 14 }}>
             <FiImage size={20} />
-            ছবি/ভিডিও
+            {t('post.photoVideo')}
             <input ref={fileInputRef} type="file" accept="image/*,video/*" multiple onChange={handleFileChange} hidden />
           </label>
 
           <select value={privacy} onChange={(e) => setPrivacy(e.target.value)} style={{ padding: '6px 10px', borderRadius: 6, border: '1px solid #dadde1' }}>
-            <option value="public">সবার জন্য</option>
-            <option value="friends">শুধু বন্ধুরা</option>
-            <option value="only_me">শুধু আমি</option>
+            <option value="public">{t('post.public')}</option>
+            <option value="friends">{t('post.friendsOnly')}</option>
+            <option value="only_me">{t('post.onlyMe')}</option>
           </select>
 
           <Button type="submit" disabled={loading || (!text.trim() && files.length === 0)}>
-            {loading ? 'পোস্ট হচ্ছে...' : 'পোস্ট করুন'}
+            {loading ? t('post.posting') : t('post.postButton')}
           </Button>
         </div>
       </form>

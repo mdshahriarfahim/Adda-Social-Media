@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 import useSocket from '../../hooks/useSocket';
 import Avatar from '../common/Avatar';
@@ -9,6 +10,7 @@ import { acceptFriendRequest, rejectFriendRequest } from '../../api/userApi';
 
 // ডানপাশের প্যানেল — pending friend requests + বন্ধুদের মধ্যে কে অনলাইন আছে
 const RightPanel = () => {
+  const { t } = useTranslation();
   const { user, setUser } = useAuth();
   const { onlineUsers } = useSocket();
   const [requests, setRequests] = useState([]);
@@ -33,7 +35,7 @@ const RightPanel = () => {
       await acceptFriendRequest(id);
       refreshMe();
     } catch (err) {
-      alert(err.response?.data?.message || 'রিকোয়েস্ট গ্রহণ করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('rightPanel.acceptError'));
       console.error('Accept request error:', err.response?.data || err.message);
     }
   };
@@ -43,7 +45,7 @@ const RightPanel = () => {
       await rejectFriendRequest(id);
       refreshMe();
     } catch (err) {
-      alert(err.response?.data?.message || 'রিকোয়েস্ট বাতিল করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('rightPanel.rejectError'));
       console.error('Reject request error:', err.response?.data || err.message);
     }
   };
@@ -52,7 +54,7 @@ const RightPanel = () => {
     <aside style={{ width: 280, padding: 16, position: 'sticky', top: 56 }}>
       {requests.length > 0 && (
         <div style={{ marginBottom: 24 }}>
-          <h4 style={{ marginBottom: 10 }}>ফ্রেন্ড রিকোয়েস্ট</h4>
+          <h4 style={{ marginBottom: 10 }}>{t('rightPanel.friendRequests')}</h4>
           {requests.map((r) => (
             <div key={r._id} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
               <Avatar user={{ name: r.name, avatar: r.avatar }} size={40} />
@@ -60,10 +62,10 @@ const RightPanel = () => {
                 <div style={{ fontSize: 14, fontWeight: 600 }}>{r.name}</div>
                 <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
                   <Button variant="primary" onClick={() => handleAccept(r._id)}>
-                    Accept
+                    {t('common.accept')}
                   </Button>
                   <Button variant="secondary" onClick={() => handleReject(r._id)}>
-                    Reject
+                    {t('common.reject')}
                   </Button>
                 </div>
               </div>
@@ -73,8 +75,8 @@ const RightPanel = () => {
       )}
 
       <div>
-        <h4 style={{ marginBottom: 10 }}>বন্ধুরা</h4>
-        {friends.length === 0 && <p style={{ fontSize: 13, color: '#65676b' }}>এখনো কোনো বন্ধু নেই</p>}
+        <h4 style={{ marginBottom: 10 }}>{t('rightPanel.friends')}</h4>
+        {friends.length === 0 && <p style={{ fontSize: 13, color: '#65676b' }}>{t('rightPanel.noFriends')}</p>}
         {friends.map((f) => (
           <Link
             key={f._id}

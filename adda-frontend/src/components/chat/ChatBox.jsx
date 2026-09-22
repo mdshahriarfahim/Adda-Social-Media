@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiSend, FiImage } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import useSocket from '../../hooks/useSocket';
@@ -8,6 +9,7 @@ import { getConversation, sendMessage } from '../../api/messageApi';
 
 // একটা নির্দিষ্ট বন্ধুর সাথে চ্যাট উইন্ডো — real-time মেসেজ আসা/যাওয়া
 const ChatBox = ({ contact }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { socket } = useSocket();
   const [messages, setMessages] = useState([]);
@@ -90,7 +92,7 @@ const ChatBox = ({ contact }) => {
   if (!contact) {
     return (
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#65676b' }}>
-        চ্যাট শুরু করতে বামপাশ থেকে একজনকে সিলেক্ট করো
+        {t('chat.selectContact')}
       </div>
     );
   }
@@ -101,7 +103,7 @@ const ChatBox = ({ contact }) => {
         <Avatar user={contact} size={40} />
         <div>
           <div style={{ fontWeight: 600 }}>{contact.name}</div>
-          {isTyping && <div style={{ fontSize: 12, color: '#65676b' }}>লিখছে...</div>}
+          {isTyping && <div style={{ fontSize: 12, color: '#65676b' }}>{t('chat.typing')}</div>}
         </div>
       </div>
 
@@ -120,7 +122,7 @@ const ChatBox = ({ contact }) => {
         <input
           value={text}
           onChange={handleTextChange}
-          placeholder="মেসেজ লিখুন..."
+          placeholder={t('chat.messagePlaceholder')}
           style={{
             flex: 1,
             border: 'none',

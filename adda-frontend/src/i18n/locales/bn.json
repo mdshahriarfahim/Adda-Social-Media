@@ -1,0 +1,97 @@
+{
+  "common": {
+    "home": "হোম",
+    "profile": "প্রোফাইল",
+    "friends": "বন্ধুরা",
+    "messenger": "মেসেঞ্জার",
+    "notifications": "নোটিফিকেশন",
+    "logout": "লগ আউট",
+    "myProfile": "আমার প্রোফাইল",
+    "searchPlaceholder": "Adda তে খুঁজুন...",
+    "accept": "গ্রহণ করুন",
+    "reject": "বাতিল করুন",
+    "ago": "আগে"
+  },
+  "auth": {
+    "tagline": "বন্ধুদের সাথে যুক্ত থাকুন, ছবি শেয়ার করুন, আড্ডা দিন — সব এক জায়গায়।",
+    "loginError": "লগইন করতে সমস্যা হয়েছে",
+    "email": "ইমেইল",
+    "password": "পাসওয়ার্ড",
+    "loggingIn": "লগইন হচ্ছে...",
+    "login": "লগইন করুন",
+    "createAccount": "নতুন অ্যাকাউন্ট খুলুন",
+    "newAccount": "নতুন অ্যাকাউন্ট",
+    "name": "নাম",
+    "passwordMinLength": "পাসওয়ার্ড কমপক্ষে ৬ ক্যারেক্টার হতে হবে",
+    "registerError": "অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে",
+    "creatingAccount": "তৈরি হচ্ছে...",
+    "openAccount": "অ্যাকাউন্ট খুলুন",
+    "alreadyHaveAccount": "আগে থেকে অ্যাকাউন্ট আছে?"
+  },
+  "home": {
+    "noPosts": "এখনো কোনো পোস্ট নেই। প্রথম পোস্টটা তুমিই করো!",
+    "loadMore": "আরও দেখুন"
+  },
+  "post": {
+    "whatsOnYourMind": "কী মনে হচ্ছে, {{name}}?",
+    "photoVideo": "ছবি/ভিডিও",
+    "public": "সবার জন্য",
+    "friendsOnly": "শুধু বন্ধুরা",
+    "onlyMe": "শুধু আমি",
+    "posting": "পোস্ট হচ্ছে...",
+    "postButton": "পোস্ট করুন",
+    "postError": "পোস্ট করতে সমস্যা হয়েছে",
+    "commentsCount": "{{count}} কমেন্ট",
+    "like": "লাইক",
+    "comment": "কমেন্ট",
+    "share": "শেয়ার",
+    "shareSuccess": "পোস্টটি শেয়ার হয়েছে!",
+    "shareError": "শেয়ার করতে সমস্যা হয়েছে",
+    "deleteConfirm": "পোস্টটি ডিলিট করতে চান?"
+  },
+  "comment": {
+    "placeholder": "একটা কমেন্ট লিখুন...",
+    "commentError": "কমেন্ট করতে সমস্যা হয়েছে",
+    "loading": "কমেন্ট লোড হচ্ছে...",
+    "like": "লাইক"
+  },
+  "profile": {
+    "friendsCount": "{{count}} জন বন্ধু",
+    "changeCover": "কভার ফটো বদলান",
+    "friendLabel": "বন্ধু",
+    "requestSent": "রিকোয়েস্ট পাঠানো হয়েছে",
+    "addFriend": "ফ্রেন্ড রিকোয়েস্ট",
+    "unfriendConfirm": "আনফ্রেন্ড করতে চান?",
+    "noPosts": "এখনো কোনো পোস্ট নেই",
+    "friends": "বন্ধুরা",
+    "avatarUploadError": "ছবি আপলোড করতে সমস্যা হয়েছে",
+    "coverUploadError": "কভার ফটো আপলোড করতে সমস্যা হয়েছে",
+    "friendRequestError": "রিকোয়েস্ট পাঠাতে সমস্যা হয়েছে",
+    "unfriendError": "আনফ্রেন্ড করতে সমস্যা হয়েছে"
+  },
+  "chat": {
+    "messenger": "মেসেঞ্জার",
+    "friendsNoChat": "বন্ধুরা (এখনো কথা হয়নি)",
+    "noMessages": "এখনো কোনো মেসেজ নেই",
+    "sentMedia": "একটি মিডিয়া পাঠিয়েছে",
+    "typing": "লিখছে...",
+    "messagePlaceholder": "মেসেজ লিখুন...",
+    "selectContact": "চ্যাট শুরু করতে বামপাশ থেকে একজনকে সিলেক্ট করো"
+  },
+  "notifications": {
+    "title": "নোটিফিকেশন",
+    "markAllSeen": "সব দেখা হয়েছে বলে চিহ্নিত করো",
+    "noNotifications": "কোনো নোটিফিকেশন নেই"
+  },
+  "rightPanel": {
+    "friendRequests": "ফ্রেন্ড রিকোয়েস্ট",
+    "friends": "বন্ধুরা",
+    "noFriends": "এখনো কোনো বন্ধু নেই",
+    "acceptError": "রিকোয়েস্ট গ্রহণ করতে সমস্যা হয়েছে",
+    "rejectError": "রিকোয়েস্ট বাতিল করতে সমস্যা হয়েছে"
+  },
+  "search": {
+    "placeholder": "মানুষ খুঁজুন...",
+    "searching": "খোঁজা হচ্ছে..."
+  }
+}

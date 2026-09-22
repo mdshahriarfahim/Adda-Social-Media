@@ -1,12 +1,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FiSearch, FiMessageCircle, FiBell, FiLogOut, FiUser } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import Avatar from '../common/Avatar';
+import LanguageSwitcher from '../common/LanguageSwitcher';
 import { searchUsers } from '../../api/userApi';
 import { getNotifications } from '../../api/notificationApi';
 
 const Navbar = () => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
@@ -99,7 +102,7 @@ const Navbar = () => {
               value={query}
               onChange={handleSearch}
               onFocus={() => query.length >= 2 && setShowResults(true)}
-              placeholder="Adda তে খুঁজুন..."
+              placeholder={t('common.searchPlaceholder')}
               style={{
                 border: 'none',
                 background: 'transparent',
@@ -154,6 +157,8 @@ const Navbar = () => {
 
       {/* ডানপাশে আইকন + প্রোফাইল মেনু */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <LanguageSwitcher />
+
         <Link
           to="/chat"
           style={{
@@ -232,13 +237,13 @@ const Navbar = () => {
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', cursor: 'pointer' }}
               >
-                <FiUser /> <span>আমার প্রোফাইল</span>
+                <FiUser /> <span>{t('common.myProfile')}</span>
               </div>
               <div
                 onClick={handleLogout}
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', cursor: 'pointer', color: '#fa383e' }}
               >
-                <FiLogOut /> <span>লগ আউট</span>
+                <FiLogOut /> <span>{t('common.logout')}</span>
               </div>
             </div>
           )}

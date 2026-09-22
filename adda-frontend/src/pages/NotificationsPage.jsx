@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import NotificationItem from '../components/notification/NotificationItem';
@@ -8,6 +9,7 @@ import { getNotifications, markAsSeen, markAllAsSeen } from '../api/notification
 
 // সব নোটিফিকেশনের তালিকা — like, comment, friend request, message ইত্যাদি
 const NotificationsPage = () => {
+  const { t } = useTranslation();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -41,10 +43,10 @@ const NotificationsPage = () => {
         <Sidebar />
         <main style={{ flex: 1, padding: 16, maxWidth: 600, margin: '0 auto' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <h2>নোটিফিকেশন</h2>
+            <h2>{t('notifications.title')}</h2>
             {notifications.some((n) => !n.seen) && (
               <Button variant="secondary" onClick={handleSeenAll}>
-                সব দেখা হয়েছে বলে চিহ্নিত করো
+                {t('notifications.markAllSeen')}
               </Button>
             )}
           </div>
@@ -53,7 +55,7 @@ const NotificationsPage = () => {
             {loading ? (
               <Loader />
             ) : notifications.length === 0 ? (
-              <p style={{ padding: 20, textAlign: 'center', color: '#65676b' }}>কোনো নোটিফিকেশন নেই</p>
+              <p style={{ padding: 20, textAlign: 'center', color: '#65676b' }}>{t('notifications.noNotifications')}</p>
             ) : (
               notifications.map((n) => (
                 <NotificationItem key={n._id} notification={n} onSeen={handleSeen} />

@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth';
 import Avatar from '../common/Avatar';
 import { addComment } from '../../api/commentApi';
 
 // নতুন কমেন্ট লেখার ছোট ইনপুট বক্স
 const CommentBox = ({ postId, onCommentAdded }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ const CommentBox = ({ postId, onCommentAdded }) => {
       onCommentAdded(res.data.data);
       setText('');
     } catch (err) {
-      alert(err.response?.data?.message || 'কমেন্ট করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('comment.commentError'));
     } finally {
       setLoading(false);
     }
@@ -31,7 +33,7 @@ const CommentBox = ({ postId, onCommentAdded }) => {
       <input
         value={text}
         onChange={(e) => setText(e.target.value)}
-        placeholder="একটা কমেন্ট লিখুন..."
+        placeholder={t('comment.placeholder')}
         disabled={loading}
         style={{
           flex: 1,

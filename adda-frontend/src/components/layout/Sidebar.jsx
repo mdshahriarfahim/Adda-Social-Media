@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FiHome, FiUser, FiUsers, FiMessageCircle, FiBell } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import Avatar from '../common/Avatar';
 
 // বামপাশের মেনু — Home, Profile, Friends, Messages, Notifications এর শর্টকাট
 const Sidebar = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
 
   const menuItemStyle = {
@@ -37,27 +39,27 @@ const Sidebar = () => {
 
       <Link to="/" style={menuItemStyle}>
         <FiHome size={22} color="#1877f2" />
-        <span>হোম</span>
+        <span>{t('common.home')}</span>
       </Link>
 
       <Link to={`/profile/${user?.id}`} style={menuItemStyle}>
         <FiUser size={22} color="#1877f2" />
-        <span>প্রোফাইল</span>
+        <span>{t('common.profile')}</span>
       </Link>
 
       <Link to={`/profile/${user?.id}`} style={menuItemStyle}>
         <FiUsers size={22} color="#1877f2" />
-        <span>বন্ধুরা</span>
+        <span>{t('common.friends')}</span>
       </Link>
 
       <Link to="/chat" style={menuItemStyle}>
         <FiMessageCircle size={22} color="#1877f2" />
-        <span>মেসেঞ্জার</span>
+        <span>{t('common.messenger')}</span>
       </Link>
 
       <Link to="/notifications" style={menuItemStyle}>
         <FiBell size={22} color="#1877f2" />
-        <span>নোটিফিকেশন</span>
+        <span>{t('common.notifications')}</span>
       </Link>
     </aside>
   );

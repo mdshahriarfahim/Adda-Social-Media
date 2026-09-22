@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import ProfileHeader from '../components/user/ProfileHeader';
@@ -13,6 +14,7 @@ import { getUserPosts } from '../api/postApi';
 import { getMe } from '../api/authApi';
 
 const ProfilePage = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const { user } = useAuth();
   const [profileUser, setProfileUser] = useState(null);
@@ -78,7 +80,7 @@ const ProfilePage = () => {
 
           {isOwnProfile && friends.length > 0 && (
             <div style={{ background: '#fff', borderRadius: 10, padding: 14, marginBottom: 16 }}>
-              <h3 style={{ marginBottom: 10 }}>বন্ধুরা ({friends.length})</h3>
+              <h3 style={{ marginBottom: 10 }}>{t('profile.friends')} ({friends.length})</h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(90px, 1fr))' }}>
                 {friends.map((f) => (
                   <FriendCard key={f._id} friend={f} />
@@ -90,7 +92,7 @@ const ProfilePage = () => {
           {isOwnProfile && <CreatePost onPostCreated={handlePostCreated} />}
 
           {posts.length === 0 ? (
-            <p style={{ textAlign: 'center', color: '#65676b' }}>এখনো কোনো পোস্ট নেই</p>
+            <p style={{ textAlign: 'center', color: '#65676b' }}>{t('profile.noPosts')}</p>
           ) : (
             posts.map((post) => <PostCard key={post._id} post={post} onDeleted={handlePostDeleted} />)
           )}

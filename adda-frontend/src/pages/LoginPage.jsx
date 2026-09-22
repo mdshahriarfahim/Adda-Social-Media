@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import Button from '../components/common/Button';
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -23,7 +25,7 @@ const LoginPage = () => {
       await login(form);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'লগইন করতে সমস্যা হয়েছে');
+      setError(err.response?.data?.message || t('auth.loginError'));
     } finally {
       setLoading(false);
     }
@@ -43,7 +45,7 @@ const LoginPage = () => {
         <div style={{ flex: 1, minWidth: 280 }}>
           <h1 style={{ color: '#1877f2', fontSize: 48, fontWeight: 800 }}>Adda</h1>
           <p style={{ fontSize: 20, color: '#050505' }}>
-            বন্ধুদের সাথে যুক্ত থাকুন, ছবি শেয়ার করুন, আড্ডা দিন — সব এক জায়গায়।
+            {t('auth.tagline')}
           </p>
         </div>
 
@@ -66,7 +68,7 @@ const LoginPage = () => {
             <input
               name="email"
               type="email"
-              placeholder="ইমেইল"
+              placeholder={t('auth.email')}
               value={form.email}
               onChange={handleChange}
               required
@@ -75,14 +77,14 @@ const LoginPage = () => {
             <input
               name="password"
               type="password"
-              placeholder="পাসওয়ার্ড"
+              placeholder={t('auth.password')}
               value={form.password}
               onChange={handleChange}
               required
               style={inputStyle}
             />
             <Button type="submit" fullWidth disabled={loading}>
-              {loading ? 'লগইন হচ্ছে...' : 'লগইন করুন'}
+              {loading ? t('auth.loggingIn') : t('auth.login')}
             </Button>
           </form>
 
@@ -90,7 +92,7 @@ const LoginPage = () => {
 
           <Link to="/register">
             <Button variant="secondary" fullWidth>
-              নতুন অ্যাকাউন্ট খুলুন
+              {t('auth.createAccount')}
             </Button>
           </Link>
         </div>

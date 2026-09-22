@@ -1,0 +1,97 @@
+{
+  "common": {
+    "home": "Home",
+    "profile": "Profile",
+    "friends": "Friends",
+    "messenger": "Messenger",
+    "notifications": "Notifications",
+    "logout": "Log Out",
+    "myProfile": "My Profile",
+    "searchPlaceholder": "Search Adda...",
+    "accept": "Accept",
+    "reject": "Reject",
+    "ago": "ago"
+  },
+  "auth": {
+    "tagline": "Stay connected with friends, share photos, hang out — all in one place.",
+    "loginError": "There was a problem logging in",
+    "email": "Email",
+    "password": "Password",
+    "loggingIn": "Logging in...",
+    "login": "Log In",
+    "createAccount": "Create New Account",
+    "newAccount": "New Account",
+    "name": "Name",
+    "passwordMinLength": "Password must be at least 6 characters",
+    "registerError": "There was a problem creating the account",
+    "creatingAccount": "Creating...",
+    "openAccount": "Open Account",
+    "alreadyHaveAccount": "Already have an account?"
+  },
+  "home": {
+    "noPosts": "No posts yet. Be the first to post something!",
+    "loadMore": "Load More"
+  },
+  "post": {
+    "whatsOnYourMind": "What's on your mind, {{name}}?",
+    "photoVideo": "Photo/Video",
+    "public": "Public",
+    "friendsOnly": "Friends only",
+    "onlyMe": "Only me",
+    "posting": "Posting...",
+    "postButton": "Post",
+    "postError": "There was a problem creating the post",
+    "commentsCount": "{{count}} comments",
+    "like": "Like",
+    "comment": "Comment",
+    "share": "Share",
+    "shareSuccess": "Post shared!",
+    "shareError": "There was a problem sharing the post",
+    "deleteConfirm": "Delete this post?"
+  },
+  "comment": {
+    "placeholder": "Write a comment...",
+    "commentError": "There was a problem posting the comment",
+    "loading": "Loading comments...",
+    "like": "Like"
+  },
+  "profile": {
+    "friendsCount": "{{count}} friends",
+    "changeCover": "Change cover photo",
+    "friendLabel": "Friend",
+    "requestSent": "Request sent",
+    "addFriend": "Add Friend",
+    "unfriendConfirm": "Unfriend this person?",
+    "noPosts": "No posts yet",
+    "friends": "Friends",
+    "avatarUploadError": "There was a problem uploading the photo",
+    "coverUploadError": "There was a problem uploading the cover photo",
+    "friendRequestError": "There was a problem sending the request",
+    "unfriendError": "There was a problem unfriending"
+  },
+  "chat": {
+    "messenger": "Messenger",
+    "friendsNoChat": "Friends (no messages yet)",
+    "noMessages": "No messages yet",
+    "sentMedia": "Sent media",
+    "typing": "typing...",
+    "messagePlaceholder": "Type a message...",
+    "selectContact": "Select someone on the left to start chatting"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "markAllSeen": "Mark all as seen",
+    "noNotifications": "No notifications"
+  },
+  "rightPanel": {
+    "friendRequests": "Friend Requests",
+    "friends": "Friends",
+    "noFriends": "No friends yet",
+    "acceptError": "There was a problem accepting the request",
+    "rejectError": "There was a problem rejecting the request"
+  },
+  "search": {
+    "placeholder": "Search people...",
+    "searching": "Searching..."
+  }
+}

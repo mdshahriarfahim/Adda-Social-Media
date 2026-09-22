@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import { FiThumbsUp, FiMessageCircle, FiShare2, FiTrash2 } from 'react-icons/fi';
 import { API_BASE_URL } from '../../utils/constants';
 import useAuth from '../../hooks/useAuth';
@@ -9,6 +10,7 @@ import { toggleLikePost, sharePost, deletePost } from '../../api/postApi';
 
 // একটা পোস্ট — ছবি/ভিডিও, লাইক, কমেন্ট, শেয়ার সব এখানে
 const PostCard = ({ post, onDeleted }) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [liked, setLiked] = useState(post.likes?.includes(user?.id));
   const [likesCount, setLikesCount] = useState(post.likes?.length || 0);
@@ -25,14 +27,14 @@ const PostCard = ({ post, onDeleted }) => {
   const handleShare = async () => {
     try {
       await sharePost(post._id, {});
-      alert('পোস্টটি শেয়ার হয়েছে!');
+      alert(t('post.shareSuccess'));
     } catch (err) {
-      alert(err.response?.data?.message || 'শেয়ার করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('post.shareError'));
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm('পোস্টটি ডিলিট করতে চান?')) return;
+    if (!window.confirm(t('post.deleteConfirm'))) return;
     await deletePost(post._id);
     onDeleted(post._id);
   };
@@ -47,7 +49,7 @@ const PostCard = ({ post, onDeleted }) => {
           <div>
             <div style={{ fontWeight: 600, fontSize: 15 }}>{post.user?.name}</div>
             <div style={{ fontSize: 12, color: '#65676b' }}>
-              {formatDistanceToNow(new Date(post.createdAt))} আগে · {post.privacy === 'public' ? 'সবার জন্য' : post.privacy === 'friends' ? 'বন্ধুরা' : 'শুধু আমি'}
+              {formatDistanceToNow(new Date(post.createdAt))} {t('common.ago')} · {post.privacy === 'public' ? t('post.public') : post.privacy === 'friends' ? t('post.friendsOnly') : t('post.onlyMe')}
             </div>
           </div>
         </div>
@@ -80,20 +82,20 @@ const PostCard = ({ post, onDeleted }) => {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 14px', fontSize: 13, color: '#65676b' }}>
         <span>{likesCount > 0 && `👍 ${likesCount}`}</span>
-        <span>{post.comments?.length > 0 && `${post.comments.length} কমেন্ট`}</span>
+        <span>{post.comments?.length > 0 && t('post.commentsCount', { count: post.comments.length })}</span>
       </div>
 
       <hr style={{ border: 'none', borderTop: '1px solid #dadde1', margin: 0 }} />
 
       <div style={{ display: 'flex' }}>
         <button onClick={handleLike} style={actionButtonStyle(liked)}>
-          <FiThumbsUp /> লাইক
+          <FiThumbsUp /> {t('post.like')}
         </button>
         <button onClick={() => setShowComments((s) => !s)} style={actionButtonStyle(false)}>
-          <FiMessageCircle /> কমেন্ট
+          <FiMessageCircle /> {t('post.comment')}
         </button>
         <button onClick={handleShare} style={actionButtonStyle(false)}>
-          <FiShare2 /> শেয়ার
+          <FiShare2 /> {t('post.share')}
         </button>
       </div>
 

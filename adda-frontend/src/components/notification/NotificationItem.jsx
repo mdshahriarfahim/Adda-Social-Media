@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import Avatar from '../common/Avatar';
 
 // একটা একক নোটিফিকেশন — টাইপ অনুযায়ী কোথায় ক্লিক করলে যাবে সেটা ঠিক করে
 const NotificationItem = ({ notification, onSeen }) => {
+  const { t } = useTranslation();
   const { sender, type, text, seen, createdAt, post } = notification;
 
   const getLink = () => {
@@ -35,7 +37,7 @@ const NotificationItem = ({ notification, onSeen }) => {
       <div style={{ flex: 1 }}>
         <div style={{ fontSize: 14 }}>{text}</div>
         <div style={{ fontSize: 12, color: '#65676b', marginTop: 2 }}>
-          {formatDistanceToNow(new Date(createdAt))} আগে
+          {formatDistanceToNow(new Date(createdAt))} {t('common.ago')}
         </div>
       </div>
       {!seen && (

@@ -1,13 +1,15 @@
 import { formatDistanceToNow } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 import Avatar from '../common/Avatar';
 import useSocket from '../../hooks/useSocket';
 
 // ইনবক্স — সব কনভারসেশনের প্রিভিউ, unread count সহ
 const ChatList = ({ conversations, activeUserId, onSelect }) => {
+  const { t } = useTranslation();
   const { onlineUsers } = useSocket();
 
   if (conversations.length === 0) {
-    return <p style={{ padding: 16, color: '#65676b', fontSize: 14 }}>এখনো কোনো মেসেজ নেই</p>;
+    return <p style={{ padding: 16, color: '#65676b', fontSize: 14 }}>{t('chat.noMessages')}</p>;
   }
 
   return (
@@ -58,8 +60,8 @@ const ChatList = ({ conversations, activeUserId, onSelect }) => {
                   textOverflow: 'ellipsis',
                 }}
               >
-                {conv.lastMessage?.text || 'একটি মিডিয়া পাঠিয়েছে'} ·{' '}
-                {formatDistanceToNow(new Date(conv.lastMessage.createdAt))} আগে
+                {conv.lastMessage?.text || t('chat.sentMedia')} ·{' '}
+                {formatDistanceToNow(new Date(conv.lastMessage.createdAt))} {t('common.ago')}
               </div>
             </div>
             {conv.unreadCount > 0 && (

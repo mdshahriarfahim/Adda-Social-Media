@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/layout/Navbar';
 import Sidebar from '../components/layout/Sidebar';
 import RightPanel from '../components/layout/RightPanel';
@@ -9,6 +10,7 @@ import { getFeed } from '../api/postApi';
 
 // News Feed — নিজের + বন্ধুদের পোস্ট দেখায়
 const HomePage = () => {
+  const { t } = useTranslation();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -59,7 +61,7 @@ const HomePage = () => {
           {loading ? (
             <Loader />
           ) : posts.length === 0 ? (
-            <p style={{ textAlign: 'center', color: '#65676b' }}>এখনো কোনো পোস্ট নেই। প্রথম পোস্টটা তুমিই করো!</p>
+            <p style={{ textAlign: 'center', color: '#65676b' }}>{t('home.noPosts')}</p>
           ) : (
             <>
               {posts.map((post) => (
@@ -70,7 +72,7 @@ const HomePage = () => {
                   onClick={loadMore}
                   style={{ width: '100%', padding: 10, border: 'none', background: '#e4e6eb', borderRadius: 8, cursor: 'pointer', fontWeight: 600 }}
                 >
-                  আরও দেখুন
+                  {t('home.loadMore')}
                 </button>
               )}
             </>

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiCamera, FiUserPlus, FiUserCheck, FiUserX } from 'react-icons/fi';
 import useAuth from '../../hooks/useAuth';
 import Avatar from '../common/Avatar';
@@ -8,6 +9,7 @@ import { API_BASE_URL } from '../../utils/constants';
 
 // প্রোফাইল পেজের উপরের অংশ — কভার ফটো, অ্যাভাটার, নাম, বায়ো, ফ্রেন্ড বাটন
 const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
+  const { t } = useTranslation();
   const { user, setUser } = useAuth();
   const avatarInputRef = useRef(null);
   const coverInputRef = useRef(null);
@@ -25,7 +27,7 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
       setUser(res.data.data);
       onUpdated(res.data.data);
     } catch (err) {
-      alert(err.response?.data?.message || 'ছবি আপলোড করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('profile.avatarUploadError'));
       console.error('Avatar upload error:', err.response?.data || err.message);
     }
   };
@@ -38,7 +40,7 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
       setUser(res.data.data);
       onUpdated(res.data.data);
     } catch (err) {
-      alert(err.response?.data?.message || 'কভার ফটো আপলোড করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('profile.coverUploadError'));
       console.error('Cover upload error:', err.response?.data || err.message);
     }
   };
@@ -48,18 +50,18 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
       await sendFriendRequest(profileUser.id);
       setRequestSent(true);
     } catch (err) {
-      alert(err.response?.data?.message || 'রিকোয়েস্ট পাঠাতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('profile.friendRequestError'));
       console.error('Friend request error:', err.response?.data || err.message);
     }
   };
 
   const handleUnfriend = async () => {
-    if (!window.confirm('আনফ্রেন্ড করতে চান?')) return;
+    if (!window.confirm(t('profile.unfriendConfirm'))) return;
     try {
       await unfriendUser(profileUser.id);
       onUpdated({ ...profileUser });
     } catch (err) {
-      alert(err.response?.data?.message || 'আনফ্রেন্ড করতে সমস্যা হয়েছে');
+      alert(err.response?.data?.message || t('profile.unfriendError'));
       console.error('Unfriend error:', err.response?.data || err.message);
     }
   };
@@ -89,7 +91,7 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
                 fontSize: 13,
               }}
             >
-              <FiCamera /> কভার ফটো বদলান
+              <FiCamera /> {t('profile.changeCover')}
             </button>
             <input ref={coverInputRef} type="file" accept="image/*" onChange={handleCoverChange} hidden />
           </>
@@ -131,22 +133,22 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
         <div style={{ flex: 1, paddingBottom: 8 }}>
           <h2 style={{ fontSize: 26, marginBottom: 4 }}>{profileUser?.name}</h2>
           {profileUser?.bio && <p style={{ color: '#65676b', fontSize: 14 }}>{profileUser.bio}</p>}
-          <p style={{ color: '#65676b', fontSize: 13, marginTop: 4 }}>{profileUser?.friendsCount || 0} জন বন্ধু</p>
+          <p style={{ color: '#65676b', fontSize: 13, marginTop: 4 }}>{t('profile.friendsCount', { count: profileUser?.friendsCount || 0 })}</p>
         </div>
 
         {!isOwnProfile && (
           <div style={{ paddingBottom: 8 }}>
             {isFriend ? (
               <Button variant="secondary" onClick={handleUnfriend}>
-                <FiUserCheck /> বন্ধু
+                <FiUserCheck /> {t('profile.friendLabel')}
               </Button>
             ) : requestSent ? (
               <Button variant="secondary" disabled>
-                রিকোয়েস্ট পাঠানো হয়েছে
+                {t('profile.requestSent')}
               </Button>
             ) : (
               <Button onClick={handleAddFriend}>
-                <FiUserPlus /> ফ্রেন্ড রিকোয়েস্ট
+                <FiUserPlus /> {t('profile.addFriend')}
               </Button>
             )}
           </div>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { FiSearch } from 'react-icons/fi';
 import Avatar from '../common/Avatar';
 import { searchUsers } from '../../api/userApi';
@@ -7,6 +8,7 @@ import { searchUsers } from '../../api/userApi';
 // স্ট্যান্ডঅ্যালোন ইউজার সার্চ বক্স (Navbar এর সার্চ থেকে আলাদা,
 // প্রয়োজনে কোনো পেজে বসানোর জন্য)
 const UserSearch = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,12 +36,12 @@ const UserSearch = () => {
         <input
           value={query}
           onChange={handleSearch}
-          placeholder="মানুষ খুঁজুন..."
+          placeholder={t('search.placeholder')}
           style={{ border: 'none', background: 'transparent', marginLeft: 8, outline: 'none', width: '100%' }}
         />
       </div>
 
-      {loading && <p style={{ fontSize: 13, color: '#65676b', marginTop: 10 }}>খোঁজা হচ্ছে...</p>}
+      {loading && <p style={{ fontSize: 13, color: '#65676b', marginTop: 10 }}>{t('search.searching')}</p>}
 
       <div style={{ marginTop: 10 }}>
         {results.map((u) => (

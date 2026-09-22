@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import useAuth from '../hooks/useAuth';
 import Button from '../components/common/Button';
 
 const RegisterPage = () => {
+  const { t } = useTranslation();
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -20,7 +22,7 @@ const RegisterPage = () => {
     setError('');
 
     if (form.password.length < 6) {
-      setError('পাসওয়ার্ড কমপক্ষে ৬ ক্যারেক্টার হতে হবে');
+      setError(t('auth.passwordMinLength'));
       return;
     }
 
@@ -29,7 +31,7 @@ const RegisterPage = () => {
       await register(form);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'অ্যাকাউন্ট তৈরি করতে সমস্যা হয়েছে');
+      setError(err.response?.data?.message || t('auth.registerError'));
     } finally {
       setLoading(false);
     }
@@ -49,7 +51,7 @@ const RegisterPage = () => {
         <div style={{ flex: 1, minWidth: 280 }}>
           <h1 style={{ color: '#1877f2', fontSize: 48, fontWeight: 800 }}>Adda</h1>
           <p style={{ fontSize: 20, color: '#050505' }}>
-            বন্ধুদের সাথে যুক্ত থাকুন, ছবি শেয়ার করুন, আড্ডা দিন — সব এক জায়গায়।
+            {t('auth.tagline')}
           </p>
         </div>
 
@@ -62,7 +64,7 @@ const RegisterPage = () => {
             width: 340,
           }}
         >
-          <h2 style={{ textAlign: 'center', marginBottom: 16 }}>নতুন অ্যাকাউন্ট</h2>
+          <h2 style={{ textAlign: 'center', marginBottom: 16 }}>{t('auth.newAccount')}</h2>
 
           {error && (
             <div style={{ background: '#fde2e2', color: '#c0392b', padding: 10, borderRadius: 6, marginBottom: 12, fontSize: 14 }}>
@@ -73,7 +75,7 @@ const RegisterPage = () => {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <input
               name="name"
-              placeholder="নাম"
+              placeholder={t('auth.name')}
               value={form.name}
               onChange={handleChange}
               required
@@ -82,7 +84,7 @@ const RegisterPage = () => {
             <input
               name="email"
               type="email"
-              placeholder="ইমেইল"
+              placeholder={t('auth.email')}
               value={form.email}
               onChange={handleChange}
               required
@@ -91,19 +93,19 @@ const RegisterPage = () => {
             <input
               name="password"
               type="password"
-              placeholder="পাসওয়ার্ড"
+              placeholder={t('auth.password')}
               value={form.password}
               onChange={handleChange}
               required
               style={inputStyle}
             />
             <Button type="submit" fullWidth disabled={loading}>
-              {loading ? 'তৈরি হচ্ছে...' : 'অ্যাকাউন্ট খুলুন'}
+              {loading ? t('auth.creatingAccount') : t('auth.openAccount')}
             </Button>
           </form>
 
           <p style={{ textAlign: 'center', marginTop: 16, fontSize: 14 }}>
-            আগে থেকে অ্যাকাউন্ট আছে? <Link to="/login" style={{ color: '#1877f2' }}>লগইন করুন</Link>
+            {t('auth.alreadyHaveAccount')} <Link to="/login" style={{ color: '#1877f2' }}>{t('auth.login')}</Link>
           </p>
         </div>
       </div>

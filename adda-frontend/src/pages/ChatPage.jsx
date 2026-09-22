@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Navbar from '../components/layout/Navbar';
 import ChatList from '../components/chat/ChatList';
 import ChatBox from '../components/chat/ChatBox';
@@ -10,6 +11,7 @@ import { getMe } from '../api/authApi';
 import { getUserProfile } from '../api/userApi';
 
 const ChatPage = () => {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [conversations, setConversations] = useState([]);
   const [friendsWithoutChat, setFriendsWithoutChat] = useState([]);
@@ -58,7 +60,7 @@ const ChatPage = () => {
       <Navbar />
       <div style={{ flex: 1, display: 'flex', maxWidth: 1000, width: '100%', margin: '0 auto', background: '#fff', overflow: 'hidden' }}>
         <div style={{ width: 320, borderRight: '1px solid #dadde1', overflowY: 'auto' }}>
-          <h3 style={{ padding: 14 }}>মেসেঞ্জার</h3>
+          <h3 style={{ padding: 14 }}>{t('chat.messenger')}</h3>
           {loading ? (
             <Loader />
           ) : (
@@ -72,7 +74,7 @@ const ChatPage = () => {
               {friendsWithoutChat.length > 0 && (
                 <div style={{ borderTop: '1px solid #dadde1', paddingTop: 8 }}>
                   <div style={{ padding: '6px 14px', fontSize: 12, color: '#65676b', fontWeight: 600 }}>
-                    বন্ধুরা (এখনো কথা হয়নি)
+                    {t('chat.friendsNoChat')}
                   </div>
                   {friendsWithoutChat.map((f) => (
                     <div
