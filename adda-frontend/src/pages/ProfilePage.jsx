@@ -12,7 +12,6 @@ import { getUserProfile } from '../api/userApi';
 import { getUserPosts } from '../api/postApi';
 import { getMe } from '../api/authApi';
 
-// একটা ইউজারের প্রোফাইল পেজ — নিজের হলে পোস্ট করার বক্সও দেখাবে
 const ProfilePage = () => {
   const { id } = useParams();
   const { user } = useAuth();
@@ -22,7 +21,8 @@ const ProfilePage = () => {
   const [isFriend, setIsFriend] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const isOwnProfile = user?.id === id;
+  // String() দিয়ে তুলনা করছি যাতে ObjectId/string mismatch এ ভুল না হয়
+  const isOwnProfile = String(user?.id) === String(id);
 
   const loadProfile = async () => {
     setLoading(true);
@@ -33,9 +33,9 @@ const ProfilePage = () => {
 
       const meRes = await getMe();
       setFriends(isOwnProfile ? meRes.data.data.friends : []);
-      setIsFriend(meRes.data.data.friends?.some((f) => f._id === id));
+      setIsFriend(meRes.data.data.friends?.some((f) => String(f._id) === String(id)));
     } catch (err) {
-      // silent fail
+      console.error('Profile load error:', err.response?.data || err.message);
     } finally {
       setLoading(false);
     }

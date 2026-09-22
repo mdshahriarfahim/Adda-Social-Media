@@ -20,28 +20,48 @@ const ProfileHeader = ({ profileUser, isOwnProfile, isFriend, onUpdated }) => {
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const res = await uploadAvatar(file);
-    setUser(res.data.data);
-    onUpdated(res.data.data);
+    try {
+      const res = await uploadAvatar(file);
+      setUser(res.data.data);
+      onUpdated(res.data.data);
+    } catch (err) {
+      alert(err.response?.data?.message || 'ছবি আপলোড করতে সমস্যা হয়েছে');
+      console.error('Avatar upload error:', err.response?.data || err.message);
+    }
   };
 
   const handleCoverChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const res = await uploadCoverPhoto(file);
-    setUser(res.data.data);
-    onUpdated(res.data.data);
+    try {
+      const res = await uploadCoverPhoto(file);
+      setUser(res.data.data);
+      onUpdated(res.data.data);
+    } catch (err) {
+      alert(err.response?.data?.message || 'কভার ফটো আপলোড করতে সমস্যা হয়েছে');
+      console.error('Cover upload error:', err.response?.data || err.message);
+    }
   };
 
   const handleAddFriend = async () => {
-    await sendFriendRequest(profileUser.id);
-    setRequestSent(true);
+    try {
+      await sendFriendRequest(profileUser.id);
+      setRequestSent(true);
+    } catch (err) {
+      alert(err.response?.data?.message || 'রিকোয়েস্ট পাঠাতে সমস্যা হয়েছে');
+      console.error('Friend request error:', err.response?.data || err.message);
+    }
   };
 
   const handleUnfriend = async () => {
     if (!window.confirm('আনফ্রেন্ড করতে চান?')) return;
-    await unfriendUser(profileUser.id);
-    onUpdated({ ...profileUser });
+    try {
+      await unfriendUser(profileUser.id);
+      onUpdated({ ...profileUser });
+    } catch (err) {
+      alert(err.response?.data?.message || 'আনফ্রেন্ড করতে সমস্যা হয়েছে');
+      console.error('Unfriend error:', err.response?.data || err.message);
+    }
   };
 
   return (

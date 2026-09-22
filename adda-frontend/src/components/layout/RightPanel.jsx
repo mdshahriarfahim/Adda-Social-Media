@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth';
 import useSocket from '../../hooks/useSocket';
 import Avatar from '../common/Avatar';
 import Button from '../common/Button';
-import { getMe, } from '../../api/authApi';
+import { getMe } from '../../api/authApi';
 import { acceptFriendRequest, rejectFriendRequest } from '../../api/userApi';
 
 // ডানপাশের প্যানেল — pending friend requests + বন্ধুদের মধ্যে কে অনলাইন আছে
@@ -20,7 +20,7 @@ const RightPanel = () => {
       setRequests(res.data.data.friendRequestsReceived || []);
       setFriends(res.data.data.friends || []);
     } catch (err) {
-      // silent fail
+      console.error('RightPanel refresh error:', err.response?.data || err.message);
     }
   };
 
@@ -29,13 +29,23 @@ const RightPanel = () => {
   }, []);
 
   const handleAccept = async (id) => {
-    await acceptFriendRequest(id);
-    refreshMe();
+    try {
+      await acceptFriendRequest(id);
+      refreshMe();
+    } catch (err) {
+      alert(err.response?.data?.message || 'রিকোয়েস্ট গ্রহণ করতে সমস্যা হয়েছে');
+      console.error('Accept request error:', err.response?.data || err.message);
+    }
   };
 
   const handleReject = async (id) => {
-    await rejectFriendRequest(id);
-    refreshMe();
+    try {
+      await rejectFriendRequest(id);
+      refreshMe();
+    } catch (err) {
+      alert(err.response?.data?.message || 'রিকোয়েস্ট বাতিল করতে সমস্যা হয়েছে');
+      console.error('Reject request error:', err.response?.data || err.message);
+    }
   };
 
   return (
@@ -68,7 +78,7 @@ const RightPanel = () => {
         {friends.map((f) => (
           <Link
             key={f._id}
-            to={`/profile/${f._id}`}
+            to={`/chat?with=${f._id}`}
             style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, textDecoration: 'none', color: '#050505' }}
           >
             <div style={{ position: 'relative' }}>

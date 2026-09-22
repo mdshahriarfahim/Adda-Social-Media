@@ -61,6 +61,13 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
+// ছোট user object বানায় (id + name + avatar URL) — friends/requests list এ ব্যবহারের জন্য
+const miniProfile = (u) => ({
+  _id: u._id,
+  name: u.name,
+  avatar: u.avatar?.fileId ? `/api/users/${u._id}/avatar` : null,
+});
+
 // @desc    Get logged-in user's profile
 // @route   GET /api/auth/me
 // @access  Private
@@ -70,7 +77,17 @@ const getMe = asyncHandler(async (req, res) => {
     .populate('friendRequestsReceived', 'name avatar')
     .populate('friendRequestsSent', 'name avatar');
 
-  res.json({ success: true, data: user });
+  // IMPORTANT: register/login এর মতোই ফরম্যাটে (id ফিল্ড সহ) ডেটা পাঠানো হচ্ছে,
+  // যাতে page refresh করলেও frontend "নিজের প্রোফাইল" ঠিকমতো চিনতে পারে
+  res.json({
+    success: true,
+    data: {
+      ...user.toPublicJSON(),
+      friends: user.friends.map(miniProfile),
+      friendRequestsReceived: user.friendRequestsReceived.map(miniProfile),
+      friendRequestsSent: user.friendRequestsSent.map(miniProfile),
+    },
+  });
 });
 
 // @desc    Logout (mark offline)
